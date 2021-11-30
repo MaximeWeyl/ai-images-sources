@@ -1,0 +1,18 @@
+{
+  "build_args": {
+    "FROM": {
+      "FormatValue": "10.2",
+      "DockerfileValue": "nvidia/cuda:10.2-cudnn7-runtime-ubuntu18.04",
+      "Condition": null
+    },
+    "conda_MINICONDA_URL": {
+      "FormatValue": "py39",
+      "DockerfileValue": "https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh",
+      "Condition": null
+    }
+  },
+  "meta_args": {
+    "image_version": "v0.3.2",
+    "image_tag": "conda/conda:py39-cuda10.2-v0.3.2"
+  }
+}
