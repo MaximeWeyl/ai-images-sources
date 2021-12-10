@@ -119,5 +119,5 @@ target "conda/conda:py39-cuda11.2-v0.2" {
   }
 }
 group "default" {
-  targets = ["conda/conda:py38-cuda10.0-v0.2", "conda/conda:py37-cuda10.0-v0.2", "conda/conda:py37-cuda10.1-v0.2", "conda/conda:py39-cuda10.1-v0.2", "conda/conda:py39-cuda10.0-v0.2", "conda/conda:py38-cuda10.1-v0.2", "conda/conda:py39-cuda10.2-v0.2", "conda/conda:py38-cuda11.0-v0.2", "conda/conda:py37-cuda11.0-v0.2", "conda/conda:py39-cuda11.0-v0.2", "conda/conda:py38-cuda10.2-v0.2", "conda/conda:py37-cuda10.2-v0.2", "conda/conda:py38-cuda11.2-v0.2", "conda/conda:py37-cuda11.2-v0.2", "conda/conda:py39-cuda11.2-v0.2"]
+  targets = ["conda/conda:py37-cuda10.0-v0.2", "conda/conda:py39-cuda10.0-v0.2", "conda/conda:py37-cuda10.1-v0.2", "conda/conda:py38-cuda10.2-v0.2", "conda/conda:py37-cuda11.0-v0.2", "conda/conda:py38-cuda11.2-v0.2", "conda/conda:py39-cuda11.2-v0.2", "conda/conda:py38-cuda10.0-v0.2", "conda/conda:py38-cuda11.0-v0.2", "conda/conda:py39-cuda11.0-v0.2", "conda/conda:py37-cuda10.2-v0.2", "conda/conda:py39-cuda10.2-v0.2", "conda/conda:py39-cuda10.1-v0.2", "conda/conda:py37-cuda11.2-v0.2", "conda/conda:py38-cuda10.1-v0.2"]
 }
