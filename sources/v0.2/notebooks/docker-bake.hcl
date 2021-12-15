@@ -1,4 +1,4 @@
-target "notebooks/jupyterlab-conda:v-py38-cuda10.0-v0.2" {
+target "notebooks-jupyterlab-conda:v-py38-cuda10.0-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py38-cuda10.0-v0.2"]
   args = {
@@ -7,7 +7,7 @@ target "notebooks/jupyterlab-conda:v-py38-cuda10.0-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-conda:v-py37-cuda10.0-v0.2" {
+target "notebooks-jupyterlab-conda:v-py37-cuda10.0-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py37-cuda10.0-v0.2"]
   args = {
@@ -16,7 +16,7 @@ target "notebooks/jupyterlab-conda:v-py37-cuda10.0-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-conda:v-py39-cuda10.0-v0.2" {
+target "notebooks-jupyterlab-conda:v-py39-cuda10.0-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py39-cuda10.0-v0.2"]
   args = {
@@ -25,7 +25,7 @@ target "notebooks/jupyterlab-conda:v-py39-cuda10.0-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-conda:v-py38-cuda10.1-v0.2" {
+target "notebooks-jupyterlab-conda:v-py38-cuda10.1-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py38-cuda10.1-v0.2"]
   args = {
@@ -34,7 +34,7 @@ target "notebooks/jupyterlab-conda:v-py38-cuda10.1-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.2-py38-cuda10.1-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.2-py38-cuda10.1-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.2-py38-cuda10.1-v0.2"]
   args = {
@@ -43,7 +43,7 @@ target "notebooks/jupyterlab-tensorflow:2.2-py38-cuda10.1-v0.2" {
     framework_SPEC      = "tensorflow==2.2"
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.3-py38-cuda10.1-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.3-py38-cuda10.1-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.3-py38-cuda10.1-v0.2"]
   args = {
@@ -52,7 +52,7 @@ target "notebooks/jupyterlab-tensorflow:2.3-py38-cuda10.1-v0.2" {
     framework_SPEC      = "tensorflow==2.3"
   }
 }
-target "notebooks/jupyterlab-conda:v-py37-cuda10.1-v0.2" {
+target "notebooks-jupyterlab-conda:v-py37-cuda10.1-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py37-cuda10.1-v0.2"]
   args = {
@@ -61,7 +61,7 @@ target "notebooks/jupyterlab-conda:v-py37-cuda10.1-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.2-py37-cuda10.1-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.2-py37-cuda10.1-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.2-py37-cuda10.1-v0.2"]
   args = {
@@ -70,7 +70,7 @@ target "notebooks/jupyterlab-tensorflow:2.2-py37-cuda10.1-v0.2" {
     framework_SPEC      = "tensorflow==2.2"
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.3-py37-cuda10.1-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.3-py37-cuda10.1-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.3-py37-cuda10.1-v0.2"]
   args = {
@@ -79,7 +79,7 @@ target "notebooks/jupyterlab-tensorflow:2.3-py37-cuda10.1-v0.2" {
     framework_SPEC      = "tensorflow==2.3"
   }
 }
-target "notebooks/jupyterlab-conda:v-py39-cuda10.1-v0.2" {
+target "notebooks-jupyterlab-conda:v-py39-cuda10.1-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py39-cuda10.1-v0.2"]
   args = {
@@ -88,7 +88,7 @@ target "notebooks/jupyterlab-conda:v-py39-cuda10.1-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-conda:v-py38-cuda10.2-v0.2" {
+target "notebooks-jupyterlab-conda:v-py38-cuda10.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py38-cuda10.2-v0.2"]
   args = {
@@ -97,7 +97,7 @@ target "notebooks/jupyterlab-conda:v-py38-cuda10.2-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-pytorch:1.10.0-py38-cuda10.2-v0.2" {
+target "notebooks-jupyterlab-pytorch:1.10.0-py38-cuda10.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-pytorch:1.10.0-py38-cuda10.2-v0.2"]
   args = {
@@ -106,7 +106,7 @@ target "notebooks/jupyterlab-pytorch:1.10.0-py38-cuda10.2-v0.2" {
     framework_SPEC      = "torch==1.10.0 torchvision torchaudio"
   }
 }
-target "notebooks/jupyterlab-conda:v-py37-cuda10.2-v0.2" {
+target "notebooks-jupyterlab-conda:v-py37-cuda10.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py37-cuda10.2-v0.2"]
   args = {
@@ -115,7 +115,7 @@ target "notebooks/jupyterlab-conda:v-py37-cuda10.2-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-pytorch:1.10.0-py37-cuda10.2-v0.2" {
+target "notebooks-jupyterlab-pytorch:1.10.0-py37-cuda10.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-pytorch:1.10.0-py37-cuda10.2-v0.2"]
   args = {
@@ -124,7 +124,7 @@ target "notebooks/jupyterlab-pytorch:1.10.0-py37-cuda10.2-v0.2" {
     framework_SPEC      = "torch==1.10.0 torchvision torchaudio"
   }
 }
-target "notebooks/jupyterlab-conda:v-py39-cuda10.2-v0.2" {
+target "notebooks-jupyterlab-conda:v-py39-cuda10.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py39-cuda10.2-v0.2"]
   args = {
@@ -133,7 +133,7 @@ target "notebooks/jupyterlab-conda:v-py39-cuda10.2-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-pytorch:1.10.0-py39-cuda10.2-v0.2" {
+target "notebooks-jupyterlab-pytorch:1.10.0-py39-cuda10.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-pytorch:1.10.0-py39-cuda10.2-v0.2"]
   args = {
@@ -142,7 +142,7 @@ target "notebooks/jupyterlab-pytorch:1.10.0-py39-cuda10.2-v0.2" {
     framework_SPEC      = "torch==1.10.0 torchvision torchaudio"
   }
 }
-target "notebooks/jupyterlab-conda:v-py38-cuda11.0-v0.2" {
+target "notebooks-jupyterlab-conda:v-py38-cuda11.0-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py38-cuda11.0-v0.2"]
   args = {
@@ -151,7 +151,7 @@ target "notebooks/jupyterlab-conda:v-py38-cuda11.0-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.4-py38-cuda11.0-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.4-py38-cuda11.0-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.4-py38-cuda11.0-v0.2"]
   args = {
@@ -160,7 +160,7 @@ target "notebooks/jupyterlab-tensorflow:2.4-py38-cuda11.0-v0.2" {
     framework_SPEC      = "tensorflow==2.4"
   }
 }
-target "notebooks/jupyterlab-conda:v-py37-cuda11.0-v0.2" {
+target "notebooks-jupyterlab-conda:v-py37-cuda11.0-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py37-cuda11.0-v0.2"]
   args = {
@@ -169,7 +169,7 @@ target "notebooks/jupyterlab-conda:v-py37-cuda11.0-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.4-py37-cuda11.0-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.4-py37-cuda11.0-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.4-py37-cuda11.0-v0.2"]
   args = {
@@ -178,7 +178,7 @@ target "notebooks/jupyterlab-tensorflow:2.4-py37-cuda11.0-v0.2" {
     framework_SPEC      = "tensorflow==2.4"
   }
 }
-target "notebooks/jupyterlab-conda:v-py39-cuda11.0-v0.2" {
+target "notebooks-jupyterlab-conda:v-py39-cuda11.0-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py39-cuda11.0-v0.2"]
   args = {
@@ -187,7 +187,7 @@ target "notebooks/jupyterlab-conda:v-py39-cuda11.0-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-conda:v-py38-cuda11.2-v0.2" {
+target "notebooks-jupyterlab-conda:v-py38-cuda11.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py38-cuda11.2-v0.2"]
   args = {
@@ -196,7 +196,7 @@ target "notebooks/jupyterlab-conda:v-py38-cuda11.2-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.5-py38-cuda11.2-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.5-py38-cuda11.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.5-py38-cuda11.2-v0.2"]
   args = {
@@ -205,7 +205,7 @@ target "notebooks/jupyterlab-tensorflow:2.5-py38-cuda11.2-v0.2" {
     framework_SPEC      = "tensorflow==2.5"
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.6-py38-cuda11.2-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.6-py38-cuda11.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.6-py38-cuda11.2-v0.2"]
   args = {
@@ -214,7 +214,7 @@ target "notebooks/jupyterlab-tensorflow:2.6-py38-cuda11.2-v0.2" {
     framework_SPEC      = "tensorflow==2.6"
   }
 }
-target "notebooks/jupyterlab-conda:v-py37-cuda11.2-v0.2" {
+target "notebooks-jupyterlab-conda:v-py37-cuda11.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py37-cuda11.2-v0.2"]
   args = {
@@ -223,7 +223,7 @@ target "notebooks/jupyterlab-conda:v-py37-cuda11.2-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.5-py37-cuda11.2-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.5-py37-cuda11.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.5-py37-cuda11.2-v0.2"]
   args = {
@@ -232,7 +232,7 @@ target "notebooks/jupyterlab-tensorflow:2.5-py37-cuda11.2-v0.2" {
     framework_SPEC      = "tensorflow==2.5"
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.6-py37-cuda11.2-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.6-py37-cuda11.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.6-py37-cuda11.2-v0.2"]
   args = {
@@ -241,7 +241,7 @@ target "notebooks/jupyterlab-tensorflow:2.6-py37-cuda11.2-v0.2" {
     framework_SPEC      = "tensorflow==2.6"
   }
 }
-target "notebooks/jupyterlab-conda:v-py39-cuda11.2-v0.2" {
+target "notebooks-jupyterlab-conda:v-py39-cuda11.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-conda:v-py39-cuda11.2-v0.2"]
   args = {
@@ -250,7 +250,7 @@ target "notebooks/jupyterlab-conda:v-py39-cuda11.2-v0.2" {
     framework_SPEC      = ""
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.5-py39-cuda11.2-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.5-py39-cuda11.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.5-py39-cuda11.2-v0.2"]
   args = {
@@ -259,7 +259,7 @@ target "notebooks/jupyterlab-tensorflow:2.5-py39-cuda11.2-v0.2" {
     framework_SPEC      = "tensorflow==2.5"
   }
 }
-target "notebooks/jupyterlab-tensorflow:2.6-py39-cuda11.2-v0.2" {
+target "notebooks-jupyterlab-tensorflow:2.6-py39-cuda11.2-v0.2" {
   dockerfile = "Dockerfile"
   tags       = ["notebooks/jupyterlab-tensorflow:2.6-py39-cuda11.2-v0.2"]
   args = {
@@ -269,5 +269,5 @@ target "notebooks/jupyterlab-tensorflow:2.6-py39-cuda11.2-v0.2" {
   }
 }
 group "default" {
-  targets = ["notebooks/jupyterlab-tensorflow:2.6-py37-cuda11.2-v0.2", "notebooks/jupyterlab-tensorflow:2.3-py37-cuda10.1-v0.2", "notebooks/jupyterlab-conda:v-py38-cuda10.2-v0.2", "notebooks/jupyterlab-pytorch:1.10.0-py37-cuda10.2-v0.2", "notebooks/jupyterlab-conda:v-py37-cuda11.0-v0.2", "notebooks/jupyterlab-tensorflow:2.5-py38-cuda11.2-v0.2", "notebooks/jupyterlab-tensorflow:2.5-py39-cuda11.2-v0.2", "notebooks/jupyterlab-tensorflow:2.2-py38-cuda10.1-v0.2", "notebooks/jupyterlab-tensorflow:2.3-py38-cuda10.1-v0.2", "notebooks/jupyterlab-tensorflow:2.2-py37-cuda10.1-v0.2", "notebooks/jupyterlab-conda:v-py37-cuda10.2-v0.2", "notebooks/jupyterlab-conda:v-py38-cuda11.0-v0.2", "notebooks/jupyterlab-tensorflow:2.5-py37-cuda11.2-v0.2", "notebooks/jupyterlab-conda:v-py39-cuda10.0-v0.2", "notebooks/jupyterlab-conda:v-py38-cuda10.1-v0.2", "notebooks/jupyterlab-pytorch:1.10.0-py38-cuda10.2-v0.2", "notebooks/jupyterlab-conda:v-py39-cuda10.2-v0.2", "notebooks/jupyterlab-pytorch:1.10.0-py39-cuda10.2-v0.2", "notebooks/jupyterlab-conda:v-py38-cuda11.2-v0.2", "notebooks/jupyterlab-tensorflow:2.6-py38-cuda11.2-v0.2", "notebooks/jupyterlab-conda:v-py37-cuda11.2-v0.2", "notebooks/jupyterlab-conda:v-py38-cuda10.0-v0.2", "notebooks/jupyterlab-tensorflow:2.6-py39-cuda11.2-v0.2", "notebooks/jupyterlab-tensorflow:2.4-py38-cuda11.0-v0.2", "notebooks/jupyterlab-conda:v-py37-cuda10.1-v0.2", "notebooks/jupyterlab-tensorflow:2.4-py37-cuda11.0-v0.2", "notebooks/jupyterlab-conda:v-py39-cuda11.0-v0.2", "notebooks/jupyterlab-conda:v-py39-cuda11.2-v0.2", "notebooks/jupyterlab-conda:v-py39-cuda10.1-v0.2", "notebooks/jupyterlab-conda:v-py37-cuda10.0-v0.2"]
+  targets = ["notebooks-jupyterlab-conda:v-py39-cuda10.1-v0.2", "notebooks-jupyterlab-conda:v-py39-cuda10.2-v0.2", "notebooks-jupyterlab-conda:v-py39-cuda11.0-v0.2", "notebooks-jupyterlab-conda:v-py37-cuda10.1-v0.2", "notebooks-jupyterlab-tensorflow:2.3-py37-cuda10.1-v0.2", "notebooks-jupyterlab-conda:v-py37-cuda10.2-v0.2", "notebooks-jupyterlab-conda:v-py37-cuda11.0-v0.2", "notebooks-jupyterlab-tensorflow:2.6-py38-cuda11.2-v0.2", "notebooks-jupyterlab-tensorflow:2.6-py37-cuda11.2-v0.2", "notebooks-jupyterlab-tensorflow:2.3-py38-cuda10.1-v0.2", "notebooks-jupyterlab-conda:v-py38-cuda10.2-v0.2", "notebooks-jupyterlab-tensorflow:2.4-py38-cuda11.0-v0.2", "notebooks-jupyterlab-conda:v-py39-cuda11.2-v0.2", "notebooks-jupyterlab-pytorch:1.10.0-py38-cuda10.2-v0.2", "notebooks-jupyterlab-pytorch:1.10.0-py39-cuda10.2-v0.2", "notebooks-jupyterlab-conda:v-py38-cuda11.0-v0.2", "notebooks-jupyterlab-tensorflow:2.5-py39-cuda11.2-v0.2", "notebooks-jupyterlab-pytorch:1.10.0-py37-cuda10.2-v0.2", "notebooks-jupyterlab-conda:v-py38-cuda11.2-v0.2", "notebooks-jupyterlab-tensorflow:2.5-py38-cuda11.2-v0.2", "notebooks-jupyterlab-conda:v-py37-cuda11.2-v0.2", "notebooks-jupyterlab-tensorflow:2.5-py37-cuda11.2-v0.2", "notebooks-jupyterlab-conda:v-py37-cuda10.0-v0.2", "notebooks-jupyterlab-conda:v-py39-cuda10.0-v0.2", "notebooks-jupyterlab-tensorflow:2.2-py37-cuda10.1-v0.2", "notebooks-jupyterlab-conda:v-py38-cuda10.0-v0.2", "notebooks-jupyterlab-conda:v-py38-cuda10.1-v0.2", "notebooks-jupyterlab-tensorflow:2.2-py38-cuda10.1-v0.2", "notebooks-jupyterlab-tensorflow:2.4-py37-cuda11.0-v0.2", "notebooks-jupyterlab-tensorflow:2.6-py39-cuda11.2-v0.2"]
 }
