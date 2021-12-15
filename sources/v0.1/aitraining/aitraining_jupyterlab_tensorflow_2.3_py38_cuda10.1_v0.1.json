@@ -1,0 +1,39 @@
+{
+  "build_args": {
+    "FROM": {
+      "FormatValue": "10.1",
+      "DockerfileValue": "nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04",
+      "Condition": null
+    },
+    "conda_MINICONDA_URL": {
+      "FormatValue": "py38",
+      "DockerfileValue": "https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh",
+      "Condition": null
+    },
+    "framework_SPEC": {
+      "FormatValue": "tensorflow:2.3",
+      "DockerfileValue": "tensorflow==2.3",
+      "Condition": {
+        "Fields": {
+          "FROM": {
+            "AcceptedValues": [
+              "10.1"
+            ]
+          },
+          "conda_MINICONDA_URL": {
+            "AcceptedValues": [
+              "py37",
+              "py38"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "meta_args": {
+    "image_version": "v0.1",
+    "image_tag": "aitraining/jupyterlab-tensorflow:2.3-py38-cuda10.1-v0.1",
+    "dockerfile": "Dockerfile",
+    "target_path": "aitraining_jupyterlab_tensorflow_2.3_py38_cuda10.1_v0.1"
+  }
+}
