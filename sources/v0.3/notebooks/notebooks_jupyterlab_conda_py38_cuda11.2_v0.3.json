@@ -1,0 +1,38 @@
+{
+  "build_args": {
+    "FROM": {
+      "FormatValue": "11.2",
+      "DockerfileValue": "nvidia/cuda:11.0-cudnn8-runtime-ubuntu18.04",
+      "Condition": null
+    },
+    "conda_MINICONDA": {
+      "FormatValue": "py38",
+      "DockerfileValue": "https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh",
+      "Condition": null
+    },
+    "editor_EDITORKEY": {
+      "FormatValue": "jupyterlab",
+      "DockerfileValue": "jupyterlab",
+      "Condition": null
+    },
+    "framework_FORMATKEY": {
+      "FormatValue": "conda",
+      "DockerfileValue": "conda",
+      "Condition": {
+        "ArgName": "framework_FRAMEWORKKEY",
+        "Value": "conda"
+      }
+    },
+    "framework_FRAMEWORKKEY": {
+      "FormatValue": "conda",
+      "DockerfileValue": "conda",
+      "Condition": null
+    }
+  },
+  "meta_args": {
+    "image_version": "v0.3",
+    "image_tag": "notebooks/jupyterlab-conda:py38-cuda11.2-v0.3",
+    "dockerfile": "Dockerfile",
+    "target_path": "notebooks_jupyterlab_conda_py38_cuda11.2_v0.3"
+  }
+}
