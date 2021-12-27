@@ -1,0 +1,65 @@
+{
+  "build_args": {
+    "FROM": {
+      "FormatValue": "10.1",
+      "DockerfileValue": "nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04",
+      "Condition": null
+    },
+    "conda_MINICONDA": {
+      "FormatValue": "py38",
+      "DockerfileValue": "https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh",
+      "Condition": null
+    },
+    "editor_key": {
+      "FormatValue": "vscode",
+      "DockerfileValue": "vscode",
+      "Condition": null
+    },
+    "framework_fmt": {
+      "FormatValue": "tensorflow2.3",
+      "DockerfileValue": "tensorflow2.3",
+      "Condition": {
+        "Conditions": [
+          {
+            "ArgName": "framework_key",
+            "Value": "tensorflow"
+          },
+          {
+            "ArgName": "framework_tensorflow_tfVersion",
+            "Value": "2.3"
+          }
+        ]
+      }
+    },
+    "framework_key": {
+      "FormatValue": "tensorflow",
+      "DockerfileValue": "tensorflow",
+      "Condition": null
+    },
+    "framework_tensorflow_tfVersion": {
+      "FormatValue": "2.3",
+      "DockerfileValue": "2.3",
+      "Condition": {
+        "Fields": {
+          "FROM": {
+            "AcceptedValues": [
+              "10.1"
+            ]
+          },
+          "conda_MINICONDA": {
+            "AcceptedValues": [
+              "py37",
+              "py38"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "meta_args": {
+    "image_version": "v0.5",
+    "image_tag": "notebooks/vscode-tensorflow2.3:py38-cuda10.1-v0.5",
+    "dockerfile": "Dockerfile",
+    "target_path": "notebooks_vscode_tensorflow2.3_py38_cuda10.1_v0.5"
+  }
+}
