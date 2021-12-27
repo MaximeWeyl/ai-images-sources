@@ -1,0 +1,38 @@
+{
+  "build_args": {
+    "FROM": {
+      "FormatValue": "10.1",
+      "DockerfileValue": "nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04",
+      "Condition": null
+    },
+    "conda_MINICONDA": {
+      "FormatValue": "py39",
+      "DockerfileValue": "https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh",
+      "Condition": null
+    },
+    "editor_key": {
+      "FormatValue": "jupyterlab",
+      "DockerfileValue": "jupyterlab",
+      "Condition": null
+    },
+    "framework_fmt": {
+      "FormatValue": "conda",
+      "DockerfileValue": "conda",
+      "Condition": {
+        "ArgName": "framework_key",
+        "Value": "conda"
+      }
+    },
+    "framework_key": {
+      "FormatValue": "conda",
+      "DockerfileValue": "conda",
+      "Condition": null
+    }
+  },
+  "meta_args": {
+    "image_version": "v0.4d",
+    "image_tag": "notebooks/jupyterlab-conda:py39-cuda10.1-v0.4d",
+    "dockerfile": "Dockerfile",
+    "target_path": "notebooks_jupyterlab_conda_py39_cuda10.1_v0.4d"
+  }
+}
