@@ -1,0 +1,38 @@
+{
+  "build_args": {
+    "FROM": {
+      "FormatValue": "10.0",
+      "DockerfileValue": "nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04",
+      "Condition": null
+    },
+    "conda_MINICONDA": {
+      "FormatValue": "py37",
+      "DockerfileValue": "https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh",
+      "Condition": null
+    },
+    "editor_key": {
+      "FormatValue": "vscode",
+      "DockerfileValue": "vscode",
+      "Condition": null
+    },
+    "framework_fmt": {
+      "FormatValue": "conda",
+      "DockerfileValue": "conda",
+      "Condition": {
+        "ArgName": "framework_key",
+        "Value": "conda"
+      }
+    },
+    "framework_key": {
+      "FormatValue": "conda",
+      "DockerfileValue": "conda",
+      "Condition": null
+    }
+  },
+  "meta_args": {
+    "image_version": "v0.4b",
+    "image_tag": "aitraining/vscode-conda:py37-cuda10.0-v0.4b",
+    "dockerfile": "Dockerfile",
+    "target_path": "aitraining_vscode_conda_py37_cuda10.0_v0.4b"
+  }
+}
