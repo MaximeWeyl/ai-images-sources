@@ -1,0 +1,59 @@
+{
+  "build_args": {
+    "FROM": {
+      "FormatValue": "11.2",
+      "DockerfileValue": "nvidia/cuda:11.0-cudnn8-runtime-ubuntu18.04",
+      "Condition": null
+    },
+    "conda_MINICONDA": {
+      "FormatValue": "py37",
+      "DockerfileValue": "https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh",
+      "Condition": null
+    },
+    "editor_EDITORKEY": {
+      "FormatValue": "vscode",
+      "DockerfileValue": "vscode",
+      "Condition": null
+    },
+    "framework_FORMATKEY": {
+      "FormatValue": "tensorflow2.5",
+      "DockerfileValue": "tensorflow2.5",
+      "Condition": {
+        "Conditions": [
+          {
+            "ArgName": "framework_FRAMEWORKKEY",
+            "Value": "tensorflow"
+          },
+          {
+            "ArgName": "framework_tensorflow_tfVersion",
+            "Value": "2.5"
+          }
+        ]
+      }
+    },
+    "framework_FRAMEWORKKEY": {
+      "FormatValue": "tensorflow",
+      "DockerfileValue": "tensorflow",
+      "Condition": null
+    },
+    "framework_tensorflow_tfVersion": {
+      "FormatValue": "2.5",
+      "DockerfileValue": "2.5",
+      "Condition": {
+        "Fields": {
+          "FROM": {
+            "AcceptedValues": [
+              "11.2"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "meta_args": {
+    "image_version": "v0.4",
+    "image_tag": "aitraining/vscode-tensorflow2.5:py37-cuda11.2-v0.4",
+    "dockerfile": "Dockerfile",
+    "target_path": "aitraining_vscode_tensorflow2.5_py37_cuda11.2_v0.4"
+  }
+}
