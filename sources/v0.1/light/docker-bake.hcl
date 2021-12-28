@@ -39,7 +39,7 @@ target "library-light-py38:cuda11.2-v0.1" {
   }
 }
 group "default" {
-  targets = ["library-light-py38:cuda10.2-v0.1", "library-light-py38:cuda11.0-v0.1", "library-light-py38:cuda11.2-v0.1", "library-light-py38:cuda10.0-v0.1", "library-light-py38:cuda10.1-v0.1"]
+  targets = ["library-light-py38:cuda11.0-v0.1", "library-light-py38:cuda11.2-v0.1", "library-light-py38:cuda10.0-v0.1", "library-light-py38:cuda10.1-v0.1", "library-light-py38:cuda10.2-v0.1"]
 }
 variable "RIBS_PREFIX" {
   default = ""
