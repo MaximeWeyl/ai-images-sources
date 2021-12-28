@@ -45,7 +45,7 @@ target "notebooks-jupyterlab-tensorflow2.2:py37-cuda10.1-v0.1" {
   }
 }
 group "default" {
-  targets = ["notebooks-jupyterlab-conda:py38-cuda10.1-v0.1", "notebooks-jupyterlab-tensorflow2.2:py38-cuda10.1-v0.1", "notebooks-jupyterlab-conda:py37-cuda10.1-v0.1", "notebooks-jupyterlab-tensorflow2.2:py37-cuda10.1-v0.1"]
+  targets = ["notebooks-jupyterlab-tensorflow2.2:py38-cuda10.1-v0.1", "notebooks-jupyterlab-conda:py37-cuda10.1-v0.1", "notebooks-jupyterlab-tensorflow2.2:py37-cuda10.1-v0.1", "notebooks-jupyterlab-conda:py38-cuda10.1-v0.1"]
 }
 variable "RIBS_PREFIX" {
   default = ""

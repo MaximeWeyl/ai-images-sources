@@ -45,7 +45,7 @@ target "aitraining-jupyterlab-tensorflow2.2:py37-cuda10.1-v0.1" {
   }
 }
 group "default" {
-  targets = ["aitraining-jupyterlab-conda:py38-cuda10.1-v0.1", "aitraining-jupyterlab-tensorflow2.2:py38-cuda10.1-v0.1", "aitraining-jupyterlab-conda:py37-cuda10.1-v0.1", "aitraining-jupyterlab-tensorflow2.2:py37-cuda10.1-v0.1"]
+  targets = ["aitraining-jupyterlab-tensorflow2.2:py38-cuda10.1-v0.1", "aitraining-jupyterlab-conda:py37-cuda10.1-v0.1", "aitraining-jupyterlab-tensorflow2.2:py37-cuda10.1-v0.1", "aitraining-jupyterlab-conda:py38-cuda10.1-v0.1"]
 }
 variable "RIBS_PREFIX" {
   default = ""
