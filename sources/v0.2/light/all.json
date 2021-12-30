@@ -1,9 +1,29 @@
 {
-  "files": {
-    "light-light-py38:cuda10.0-v0.2": "light_light_py38_cuda10.0_v0.2.json",
-    "light-light-py38:cuda10.1-v0.2": "light_light_py38_cuda10.1_v0.2.json",
-    "light-light-py38:cuda10.2-v0.2": "light_light_py38_cuda10.2_v0.2.json",
-    "light-light-py38:cuda11.0-v0.2": "light_light_py38_cuda11.0_v0.2.json",
-    "light-light-py38:cuda11.2-v0.2": "light_light_py38_cuda11.2_v0.2.json"
-  }
+  "files": [
+    {
+      "TargetName": "light-light-py38:cuda10.0-v0.2",
+      "JsonFile": "light_light_py38_cuda10.0_v0.2.json",
+      "Tag": "light/light-py38:cuda10.0-v0.2"
+    },
+    {
+      "TargetName": "light-light-py38:cuda10.1-v0.2",
+      "JsonFile": "light_light_py38_cuda10.1_v0.2.json",
+      "Tag": "light/light-py38:cuda10.1-v0.2"
+    },
+    {
+      "TargetName": "light-light-py38:cuda10.2-v0.2",
+      "JsonFile": "light_light_py38_cuda10.2_v0.2.json",
+      "Tag": "light/light-py38:cuda10.2-v0.2"
+    },
+    {
+      "TargetName": "light-light-py38:cuda11.0-v0.2",
+      "JsonFile": "light_light_py38_cuda11.0_v0.2.json",
+      "Tag": "light/light-py38:cuda11.0-v0.2"
+    },
+    {
+      "TargetName": "light-light-py38:cuda11.2-v0.2",
+      "JsonFile": "light_light_py38_cuda11.2_v0.2.json",
+      "Tag": "light/light-py38:cuda11.2-v0.2"
+    }
+  ]
 }
