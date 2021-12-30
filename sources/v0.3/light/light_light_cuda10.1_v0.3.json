@@ -1,0 +1,15 @@
+{
+  "build_args": {
+    "FROM": {
+      "FormatValue": "10.1",
+      "DockerfileValue": "nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04",
+      "Condition": null
+    }
+  },
+  "meta_args": {
+    "image_version": "v0.3",
+    "image_tag": "light/light:cuda10.1-v0.3",
+    "dockerfile": "Dockerfile",
+    "target_path": "light_light_cuda10.1_v0.3"
+  }
+}
