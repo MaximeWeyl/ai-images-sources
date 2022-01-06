@@ -1,0 +1,10 @@
+{
+  "files": [
+    {
+      "TargetName": "light-light:cuda10.0-v0.1-light",
+      "JsonFile": "light_light_cuda10.0_v0.1_light.json",
+      "Tag": "light/light:cuda10.0-v0.1-light",
+      "TagWithoutVersion": "light/light:cuda10.0"
+    }
+  ]
+}
