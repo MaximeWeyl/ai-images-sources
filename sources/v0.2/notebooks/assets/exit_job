@@ -1,0 +1,10 @@
+#!/bin/bash
+# This tells the job to exit with the given exit code
+# To use this system, your docker entrypoint should loop by calling the job_closer.sh script
+
+if [ -z "$1" ] ; then
+  echo 0 > /tmp/.job_closer
+else
+  echo "$1" > /tmp/.job_closer
+fi
+
