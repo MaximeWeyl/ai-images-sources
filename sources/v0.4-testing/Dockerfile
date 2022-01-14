@@ -73,8 +73,11 @@ RUN bash -c "$conda_MINICONDA_PATH/bin/conda init bash"
 USER ovh
 RUN bash -c "$conda_MINICONDA_PATH/bin/conda init bash"
 
-# So the conda config is available in the rest of the building process
+# This allows the conda config to be available in the rest of the building process
 SHELL ["/bin/bash", "-il", "-c"]
+
+# This is always better to have an up to date pip
+RUN pip3 install -U --user pip
 
 # ----- Block framework
 # ----- Option conda of framework
