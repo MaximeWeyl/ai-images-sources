@@ -11,7 +11,7 @@ ARG base_WORKSPACE_DIR=/workspace
 USER root
 
 # Some tools that are always good to have
-RUN apt-get update && apt-get install -y git wget unzip vim rsync
+RUN apt-get update && apt-get install -y git wget unzip vim rsync ncdu
 
 # AI Training requirements
 # User 42420 is the user that AI Training and AI Notebooks use to run the image
