@@ -36,10 +36,12 @@ COPY assets/job_closer.sh /usr/bin/job_closer.sh
 RUN chmod a+x /usr/bin/job_closer.sh /usr/bin/exit_job
 
 # AI Training CLI : ovhai
-RUN mkdir -p /ovhai/bin && \
+RUN mkdir -p /ovhai/bin &&  cd /ovhai/bin && \
+    echo "Downloading ovhai" && \
     wget https://cli.gra.training.ai.cloud.ovh.net/ovhai-linux.zip && \
+    echo "Extracting ovhai" && \
     unzip ovhai-linux.zip && rm ovhai-linux.zip && \
-    chmod a+x ovhai && mv ovhai /ovhai/bin && \
+    chmod a+x ovhai && \
     chown -R 42420:42420 /ovhai
 
 USER ovh
