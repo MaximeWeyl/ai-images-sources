@@ -1,0 +1,39 @@
+{
+  "build_args": {
+    "FROM": {
+      "FormatValue": "10.1",
+      "DockerfileValue": "nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04",
+      "Condition": null
+    },
+    "conda_MINICONDA": {
+      "FormatValue": "py38",
+      "DockerfileValue": "https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh",
+      "Condition": null
+    },
+    "editor_key": {
+      "FormatValue": "vscode",
+      "DockerfileValue": "vscode",
+      "Condition": null
+    },
+    "framework_fmt": {
+      "FormatValue": "conda",
+      "DockerfileValue": "conda",
+      "Condition": {
+        "ArgName": "framework_key",
+        "Value": "conda"
+      }
+    },
+    "framework_key": {
+      "FormatValue": "conda",
+      "DockerfileValue": "conda",
+      "Condition": null
+    }
+  },
+  "meta_args": {
+    "image_version": "v0.6-beta3",
+    "tag": "notebooks/vscode-conda:conda-py38-cuda10.1-v0.6-beta3",
+    "dockerfile": "Dockerfile",
+    "target": "notebooks_vscode_conda_conda_py38_cuda10.1_v0.6_beta3",
+    "tag_without_version": "notebooks/vscode-conda:conda-py38-cuda10.1"
+  }
+}
