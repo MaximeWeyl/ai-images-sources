@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your notebook is starting</title>
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap");
+        body {
+            display: grid;
+            place-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-family: "Open Sans", -apple-system, "Segoe UI", sans-serif;
+            font-size: 50px;
+            font-weight: bold;
+            color: #212121;
+            box-sizing: border-box;
+        }
+
+        .dots {
+            display: inline-flex;
+        }
+        .dots--animate .dot.z {
+            -webkit-animation: scale 0.8s 0.2s forwards;
+            animation: scale 0.8s 0.2s forwards;
+        }
+        .dots--animate .dot.f, .dots--animate .dot.s {
+            -webkit-animation: right 0.5s forwards;
+            animation: right 0.5s forwards;
+        }
+        .dots--animate .dot.l {
+            -webkit-animation: rightDown 0.4s 0.1s forwards linear, drop 2s 0.4s forwards linear;
+            animation: rightDown 0.4s 0.1s forwards linear, drop 2s 0.4s forwards linear;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #212121;
+            border-radius: 10px;
+            position: relative;
+            margin-left: 6px;
+        }
+        .dot.z {
+            position: absolute;
+            transform: scale(0);
+        }
+        @-webkit-keyframes scale {
+            100% {
+                transform: scale(1);
+            }
+        }
+        @keyframes scale {
+            100% {
+                transform: scale(1);
+            }
+        }
+        .dot.f, .dot.s {
+            transform: translateX(0px);
+        }
+        @-webkit-keyframes right {
+            100% {
+                transform: translateX(16px);
+            }
+        }
+        @keyframes right {
+            100% {
+                transform: translateX(16px);
+            }
+        }
+        .dot.t {
+            background: transparent;
+        }
+        .dot .l {
+            margin-left: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        @-webkit-keyframes rightDown {
+            50% {
+                top: 4px;
+                left: 16px;
+            }
+            100% {
+                top: 12px;
+                left: 24px;
+            }
+        }
+        @keyframes rightDown {
+            50% {
+                top: 4px;
+                left: 16px;
+            }
+            100% {
+                top: 12px;
+                left: 24px;
+            }
+        }
+        @-webkit-keyframes drop {
+            100% {
+                transform: translate(70px, calc(35px + (100vh/2)));
+            }
+        }
+        @keyframes drop {
+            100% {
+                transform: translate(70px, calc(35px + (100vh/2)));
+            }
+        }
+
+        @-webkit-keyframes birdie {
+            13% {
+                transform: rotate(14deg);
+            }
+            26% {
+                transform: rotate(28deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+        @keyframes birdie {
+            13% {
+                transform: rotate(14deg);
+            }
+            26% {
+                transform: rotate(28deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            text-align: left;
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Initializing the AI Notebook
+        <div class="dots"><span class="dot z"></span><span class="dot f"></span><span class="dot s"></span><span class="dot t"><span class="dot l"></span></span></div>
+    </h1>
+
+    <p>
+        Your notebook has been started. Since it is the first time it is started, we are initializing your workspace.
+        This may take a few minutes. You will be redirected to the AI Notebook after the initialization is complete.
+    </p>
+    <p>
+        When you stop your notebook, your workspace (/workspace) is pushed to your object storage.
+        That means the libraries you may have installed with pip or conda will be saved for future use (because they
+        are stored in /workspace/.miniconda3).
+    </p>
+    <p>
+        The next time you will start your notebook, the workspace will be pulled directly
+        from your object storage into /workspace. This means that you will not have to reinstall the libraries or
+        anything else you put in /workspace.
+    </p>
+    <p>
+        You can also store data in /data, which is more performant but won't be persisted if you close your notebook.
+    </p>
+
+    <script type="text/javascript">
+        waitAndRedirect = function() {
+            console.log("Waiting for notebook to start...");
+
+            // Waits
+            setTimeout(function() {
+                // Then attempts to fecth the url
+                fetch(window.location.href + "?rand=" + Math.random())
+                    .then(function(response) {
+                        return (response.text());
+                    })
+                    .then(function(responseText) {
+                        var parsedResponse = (new window.DOMParser()).parseFromString(responseText, "text/html");
+                        // If it is responding, and this is not the waiting page, then redirect
+
+                        console.log("Current title : " + document.title);
+                        console.log("Parsed title : " + parsedResponse.title);
+
+                        if (parsedResponse.title !== document.title) {
+                            console.log("Notebook is now running. Redirecting...");
+                            let url = window.location.href
+                            console.log("Redirecting to " + url);
+                            setTimeout(() => {
+                                window.location.replace(url + "?rand=" + Math.random());
+                            } , 2000)
+                        } else {
+                            // Otherwise, try again
+                            console.log("Notebook is still starting. Trying again after a little wait...");
+                            waitAndRedirect();
+                        }
+                    })
+                    .catch(function(err) {
+                    // If it is not, wait again
+                    console.log("Notebook not responding. Trying again after a little wait...");
+                    waitAndRedirect();
+                });
+            }, 5000);
+        };
+
+        window.onload = function() {
+            waitAndRedirect();
+        };
+    </script>
+    <script type="text/javascript">
+
+
+        // Helper(s)
+        // =========
+        let $ = (e) => document.querySelector(e);
+
+        // Dots
+        // ====
+        let dots = $(".dots");
+
+        // Function
+        // ========
+        function animate(element, className) {
+            element.classList.add(className);
+            setTimeout(() => {
+                element.classList.remove(className);
+                setTimeout(() => {
+                    animate(element, className);
+                }, 200);
+            }, 1500);
+        }
+
+        // Execution
+        // =========
+        animate(dots, "dots--animate");
+
+    </script>
+</body>
+</html>
