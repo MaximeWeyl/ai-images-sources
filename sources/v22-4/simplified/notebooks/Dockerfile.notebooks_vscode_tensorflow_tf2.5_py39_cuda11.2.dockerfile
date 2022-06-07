@@ -1,5 +1,6 @@
 ARG FROM
 ARG workspace_FROM=ubuntu
+ARG workspace_commonlibs_install_WORKSPACE
 ARG base_FROM=nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu18.04
 
 # ----- Step workspace
@@ -36,12 +37,22 @@ RUN echo "Installing miniconda" && \
 
 # ----- Step framework
 # ----- Option tensorflow of framework
-FROM workspace_conda as workspace
+FROM workspace_conda as workspace_framework_tensorflow
 
 ARG workspace_framework_tensorflow_version=2.5
 RUN sed -iE "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Tensorflow $workspace_framework_tensorflow_version\"/gm" /$WORKSPACE_DIR/.bashrc && \
     pip install --no-input tensorflow==$workspace_framework_tensorflow_version && \
     rm -rf $HOME/.cache
+
+# ----- Step commonlibs
+# ----- Option install of commonlibs
+FROM workspace_framework_tensorflow as workspace
+ARG workspace_commonlibs_install_PANDAS_VERSION=1.4.2
+ARG workspace_commonlibs_install_OPENCV_VERSION=4.5.5.64
+ARG workspace_commonlibs_install_MATPLOTLIB_VERSION=3.5.2
+
+USER ovh
+RUN pip install pandas==$workspace_commonlibs_install_PANDAS_VERSION matplotlib==$workspace_commonlibs_install_MATPLOTLIB_VERSION opencv-python==$workspace_commonlibs_install_OPENCV_VERSION
 
 
 # ----- Step base
@@ -111,7 +122,12 @@ COPY --from=workspace /workspace /.workspace
 RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh $editor && rm /tmp/injections.sh ; else echo "No injections.sh found" ; fi && \
     echo "source /usr/share/bash-completion/completions/git" >> $WORKSPACE_DIR/.bashrc
 
-
+# By default, tensorflow prints a lot of logs including INFO log that looks like warnings and
+# errors in the console/notebooks. We disable logs of INFO level and only keep WARNING and ERROR.
+# That results in much more readable notebooks.
+# This fix is included even in non tensorflow images, because
+# tensorflow may be installed later by the user, and is a really common framework on our platform.
+ENV TF_CPP_MIN_LOG_LEVEL=1
 
 # ----- Step ainotebooks
 FROM base_aitraining as base

@@ -1,6 +1,9 @@
 ARG FROM
 ARG workspace_FROM
 ARG workspace_framework_key
+ARG workspace_commonlibs_key
+
+ARG workspace_commonlibs_install_WORKSPACE
 ARG base_FROM
 ARG base_editor_key
 
@@ -70,7 +73,23 @@ RUN sed -iE "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Sklearn $workspace_f
     pip install scikit-learn==$workspace_framework_sklearn_version && \
     rm -rf $HOME/.cache
 
-FROM workspace_framework_$workspace_framework_key as workspace
+FROM workspace_framework_$workspace_framework_key as workspace_framework
+
+# ----- Step commonlibs
+# ----- Option noinstall of commonlibs
+FROM workspace_framework as workspace_commonlibs_noinstall
+# This build block (noinstall) is empty
+
+# ----- Option install of commonlibs
+FROM workspace_framework as workspace_commonlibs_install
+ARG workspace_commonlibs_install_PANDAS_VERSION
+ARG workspace_commonlibs_install_OPENCV_VERSION
+ARG workspace_commonlibs_install_MATPLOTLIB_VERSION
+
+USER ovh
+RUN pip install pandas==$workspace_commonlibs_install_PANDAS_VERSION matplotlib==$workspace_commonlibs_install_MATPLOTLIB_VERSION opencv-python==$workspace_commonlibs_install_OPENCV_VERSION
+
+FROM workspace_commonlibs_$workspace_commonlibs_key as workspace
 
 
 # ----- Step base
@@ -191,7 +210,12 @@ COPY --from=workspace /workspace /.workspace
 RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh $editor && rm /tmp/injections.sh ; else echo "No injections.sh found" ; fi && \
     echo "source /usr/share/bash-completion/completions/git" >> $WORKSPACE_DIR/.bashrc
 
-
+# By default, tensorflow prints a lot of logs including INFO log that looks like warnings and
+# errors in the console/notebooks. We disable logs of INFO level and only keep WARNING and ERROR.
+# That results in much more readable notebooks.
+# This fix is included even in non tensorflow images, because
+# tensorflow may be installed later by the user, and is a really common framework on our platform.
+ENV TF_CPP_MIN_LOG_LEVEL=1
 
 # ----- Step ainotebooks
 FROM base_aitraining as base

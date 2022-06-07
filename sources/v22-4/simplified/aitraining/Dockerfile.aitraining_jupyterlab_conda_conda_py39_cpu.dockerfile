@@ -36,8 +36,13 @@ RUN echo "Installing miniconda" && \
 
 # ----- Step framework
 # ----- Option conda of framework
-FROM workspace_conda as workspace
+FROM workspace_conda as workspace_framework_conda
 # This build block (conda) is empty
+
+# ----- Step commonlibs
+# ----- Option noinstall of commonlibs
+FROM workspace_framework_conda as workspace
+# This build block (noinstall) is empty
 
 
 # ----- Step base
@@ -136,3 +141,10 @@ USER ovh
 COPY --from=workspace /workspace /.workspace
 RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh $editor && rm /tmp/injections.sh ; else echo "No injections.sh found" ; fi && \
     echo "source /usr/share/bash-completion/completions/git" >> $WORKSPACE_DIR/.bashrc
+
+# By default, tensorflow prints a lot of logs including INFO log that looks like warnings and
+# errors in the console/notebooks. We disable logs of INFO level and only keep WARNING and ERROR.
+# That results in much more readable notebooks.
+# This fix is included even in non tensorflow images, because
+# tensorflow may be installed later by the user, and is a really common framework on our platform.
+ENV TF_CPP_MIN_LOG_LEVEL=1

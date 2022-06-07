@@ -1,4 +1,10 @@
 #!/bin/bash
+
+# removes these repositories because nvidia changed their PGP keys, and
+# do not need them anyway
+rm  -f /etc/apt/sources.list.d/nvidia-ml.list
+rm -f  /etc/apt/sources.list.d/cuda.list
+
 apt-get -q -yy update && DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     ca-certificates \
     curl \

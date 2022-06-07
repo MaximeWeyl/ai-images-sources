@@ -1,5 +1,6 @@
 ARG FROM
 ARG workspace_FROM=ubuntu
+ARG workspace_commonlibs_install_WORKSPACE
 ARG base_FROM=nvidia/cuda:10.2-cudnn7-runtime-ubuntu18.04
 
 # ----- Step workspace
@@ -36,7 +37,7 @@ RUN echo "Installing miniconda" && \
 
 # ----- Step framework
 # ----- Option pytorch of framework
-FROM workspace_conda as workspace
+FROM workspace_conda as workspace_framework_pytorch
 
 ARG workspace_framework_pytorch_version=1.10.1
 ARG workspace_framework_pytorch_dependencies="torch==1.10.1+cu102 torchvision==0.11.2+cu102 torchaudio==0.10.1"
@@ -47,6 +48,16 @@ USER ovh
 RUN sed -iE "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Pytorch $workspace_framework_pytorch_version\"/gm" /$WORKSPACE_DIR/.bashrc && \
     pip install -f https://download.pytorch.org/whl/torch_stable.html tqdm==4.51.0 $workspace_framework_pytorch_dependencies && \
     rm -rf $WORKSPACE_DIR/.cache
+
+# ----- Step commonlibs
+# ----- Option install of commonlibs
+FROM workspace_framework_pytorch as workspace
+ARG workspace_commonlibs_install_PANDAS_VERSION=1.4.2
+ARG workspace_commonlibs_install_OPENCV_VERSION=4.5.5.64
+ARG workspace_commonlibs_install_MATPLOTLIB_VERSION=3.5.2
+
+USER ovh
+RUN pip install pandas==$workspace_commonlibs_install_PANDAS_VERSION matplotlib==$workspace_commonlibs_install_MATPLOTLIB_VERSION opencv-python==$workspace_commonlibs_install_OPENCV_VERSION
 
 
 # ----- Step base
@@ -115,3 +126,10 @@ USER ovh
 COPY --from=workspace /workspace /.workspace
 RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh $editor && rm /tmp/injections.sh ; else echo "No injections.sh found" ; fi && \
     echo "source /usr/share/bash-completion/completions/git" >> $WORKSPACE_DIR/.bashrc
+
+# By default, tensorflow prints a lot of logs including INFO log that looks like warnings and
+# errors in the console/notebooks. We disable logs of INFO level and only keep WARNING and ERROR.
+# That results in much more readable notebooks.
+# This fix is included even in non tensorflow images, because
+# tensorflow may be installed later by the user, and is a really common framework on our platform.
+ENV TF_CPP_MIN_LOG_LEVEL=1
