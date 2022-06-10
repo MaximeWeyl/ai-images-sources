@@ -21,8 +21,12 @@ if [ -r "$REAL_WORKSPACE_DIR" ]; then
       echo "This file MUST NOT be deleted." >> $INIT_FLAG
       echo "If deleted, the workspace will be overwritten by the initialization process at next notebook start" >> $INIT_FLAG
 
-      GIT_TERMINAL_PROMPT=0 git clone https://github.com/ovh/ai-training-examples.git $WORKSPACE_DIR/ai-training-examples ||
-      echo "Could not clone ai-training-examples, we continue anyway because we don't want to depend on github failure"
+      echo "Launching every workspace initialisation scripts"
+      for script in $( compgen -G "$WORKSPACE_DIR/.init_workspace/*.sh" | sort ) ; do
+        echo "--- Launching $script"
+        bash "$script"
+      done
+      rm -rf "$WORKSPACE_DIR/.init_workspace/"
 
       # Kills the wait page, ready for launching the editor on the same port
       kill $PID_WAIT

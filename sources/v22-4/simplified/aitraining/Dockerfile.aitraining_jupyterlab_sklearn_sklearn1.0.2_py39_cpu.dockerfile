@@ -13,7 +13,7 @@ ENV WORKSPACE_DIR=/workspace
 
 USER root
 RUN echo "Installing some basic dependencies" && \
-    apt-get update && apt-get install -y wget && apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    apt-get update && apt-get install -y wget git && apt-get clean && rm -rf /var/lib/apt/lists/* && \
     echo "Setting the right user for AI Tools" && \
     mkdir $WORKSPACE_DIR && \
     chown 42420:42420 $WORKSPACE_DIR && \
@@ -40,7 +40,7 @@ RUN echo "Installing miniconda" && \
 FROM workspace_conda as workspace_framework_sklearn
 
 ARG workspace_framework_sklearn_version=1.0.2
-RUN sed -iE "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Sklearn $workspace_framework_sklearn_version\"/gm" /$WORKSPACE_DIR/.bashrc && \
+RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Sklearn $workspace_framework_sklearn_version\"/gm" /$WORKSPACE_DIR/.bashrc && \
     pip install scikit-learn==$workspace_framework_sklearn_version && \
     rm -rf $HOME/.cache
 
@@ -83,13 +83,16 @@ COPY assets/exit_job assets/job_closer.sh assets/install_tools.sh /usr/bin/
 # For running build commands with ovh user, first use the "USER ovh" command
 # For running build commands with root, first use the "USER root" command
 RUN bash /usr/bin/install_tools.sh && rm /usr/bin/install_tools.sh && \
-    mkdir $REAL_WORKSPACE_DIR && \
+    mkdir -p $REAL_WORKSPACE_DIR && \
     chown 42420:42420 $REAL_WORKSPACE_DIR && \
     ln -s $REAL_WORKSPACE_DIR $WORKSPACE_DIR && \
     chown 42420:42420 $WORKSPACE_DIR && \
     addgroup --gid 42420 ovh && \
     useradd --uid 42420 -g ovh --shell /bin/bash -d $WORKSPACE_DIR ovh && \
     chmod a+rx /usr/bin/job_closer.sh /usr/bin/exit_job
+
+# Must be done here, because user ovh is not created before
+COPY --chown=ovh:ovh assets/clone-ai-examples.sh $REAL_WORKSPACE_DIR/.init_workspace/50-clone-ai-examples.sh
 
 USER ovh
 WORKDIR /workspace
@@ -132,6 +135,7 @@ RUN echo "Installing nodjs and npm" && \
     echo "Installing some useful common extensions" && \
     /lab/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager  jupyter-matplotlib && \
     /lab/bin/jupyter labextension disable @jupyterlab/extensionmanager-extension && \
+    /lab/bin/jupyter labextension install @jupyterlab/server-proxy && \
     echo "Uninstalling the kernel of this miniconda installation, we want the user to access only his environment" && \
     rm -rf /lab/share/jupyter/kernels/python3/ && \
     echo "Cleaning stuff to reduce the image size a bit" && \

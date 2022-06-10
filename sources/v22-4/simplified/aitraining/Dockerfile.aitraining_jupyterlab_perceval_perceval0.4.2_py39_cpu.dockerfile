@@ -1,7 +1,7 @@
 ARG FROM
 ARG workspace_FROM=ubuntu
 ARG workspace_commonlibs_install_WORKSPACE
-ARG base_FROM=nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu18.04
+ARG base_FROM=ubuntu:18.04
 
 # ----- Step workspace
 # ----- Step conda
@@ -36,17 +36,36 @@ RUN echo "Installing miniconda" && \
     echo "export OVH_ENV_NAME=Conda" >> $WORKSPACE_DIR/.bashrc
 
 # ----- Step framework
-# ----- Option tensorflow of framework
-FROM workspace_conda as workspace_framework_tensorflow
+# ----- Option perceval of framework
+FROM workspace_conda as workspace_framework_perceval
 
-ARG workspace_framework_tensorflow_version=2.7
-RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Tensorflow $workspace_framework_tensorflow_version\"/gm" /$WORKSPACE_DIR/.bashrc && \
-    pip install --no-input tensorflow==$workspace_framework_tensorflow_version.* && \
-    rm -rf $HOME/.cache
+USER root
+RUN apt-get -q -yy update && DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
+    libmagickwand-dev \
+    && apt-get -qq clean \
+    && rm -rf /var/lib/apt/lists/*
+
+USER ovh
+
+
+# Installs perceval
+RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval\"/gm" /$WORKSPACE_DIR/.bashrc && \
+    pip install perceval-quandela tqdm
+
+# Set up the on-start script for cloning quandela perceval examples
+COPY --chown=ovh:ovh assets/clone-perceval-examples.sh $WORKSPACE_DIR/.init_workspace/10-clone-perceval-examples.sh
+
+
+
+# be carreful with that as the customer may link his own directory
+# to this path and you don't want to override this data
+# the only purpose of the .fake is to check if the repo is up to date
+# otherwise remove it and reclone in order to have the latest notebooks
+RUN git clone https://github.com/Quandela/Perceval.git "$WORKSPACE_DIR"/Perceval && touch "$WORKSPACE_DIR"/Perceval/.fake
 
 # ----- Step commonlibs
 # ----- Option install of commonlibs
-FROM workspace_framework_tensorflow as workspace
+FROM workspace_framework_perceval as workspace
 ARG workspace_commonlibs_install_PANDAS_VERSION=1.4.2
 ARG workspace_commonlibs_install_OPENCV_VERSION=4.5.5.64
 ARG workspace_commonlibs_install_MATPLOTLIB_VERSION=3.5.2

@@ -13,7 +13,7 @@ ENV WORKSPACE_DIR=/workspace
 
 USER root
 RUN echo "Installing some basic dependencies" && \
-    apt-get update && apt-get install -y wget && apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    apt-get update && apt-get install -y wget git && apt-get clean && rm -rf /var/lib/apt/lists/* && \
     echo "Setting the right user for AI Tools" && \
     mkdir $WORKSPACE_DIR && \
     chown 42420:42420 $WORKSPACE_DIR && \
@@ -45,7 +45,7 @@ ARG workspace_framework_pytorch_dependencies="torch==1.10.1+cu102 torchvision==0
 USER ovh
 
 # this uses a specific version of tqdm because up to date version was in conflict with torchvision
-RUN sed -iE "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Pytorch $workspace_framework_pytorch_version\"/gm" /$WORKSPACE_DIR/.bashrc && \
+RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Pytorch $workspace_framework_pytorch_version\"/gm" /$WORKSPACE_DIR/.bashrc && \
     pip install -f https://download.pytorch.org/whl/torch_stable.html tqdm==4.51.0 $workspace_framework_pytorch_dependencies && \
     rm -rf $WORKSPACE_DIR/.cache
 
@@ -88,13 +88,16 @@ COPY assets/exit_job assets/job_closer.sh assets/install_tools.sh /usr/bin/
 # For running build commands with ovh user, first use the "USER ovh" command
 # For running build commands with root, first use the "USER root" command
 RUN bash /usr/bin/install_tools.sh && rm /usr/bin/install_tools.sh && \
-    mkdir $REAL_WORKSPACE_DIR && \
+    mkdir -p $REAL_WORKSPACE_DIR && \
     chown 42420:42420 $REAL_WORKSPACE_DIR && \
     ln -s $REAL_WORKSPACE_DIR $WORKSPACE_DIR && \
     chown 42420:42420 $WORKSPACE_DIR && \
     addgroup --gid 42420 ovh && \
     useradd --uid 42420 -g ovh --shell /bin/bash -d $WORKSPACE_DIR ovh && \
     chmod a+rx /usr/bin/job_closer.sh /usr/bin/exit_job
+
+# Must be done here, because user ovh is not created before
+COPY --chown=ovh:ovh assets/clone-ai-examples.sh $REAL_WORKSPACE_DIR/.init_workspace/50-clone-ai-examples.sh
 
 USER ovh
 WORKDIR /workspace

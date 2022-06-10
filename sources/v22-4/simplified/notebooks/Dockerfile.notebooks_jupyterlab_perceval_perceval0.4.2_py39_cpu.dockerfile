@@ -1,7 +1,7 @@
 ARG FROM
 ARG workspace_FROM=ubuntu
 ARG workspace_commonlibs_install_WORKSPACE
-ARG base_FROM=nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu18.04
+ARG base_FROM=ubuntu:18.04
 
 # ----- Step workspace
 # ----- Step conda
@@ -36,17 +36,36 @@ RUN echo "Installing miniconda" && \
     echo "export OVH_ENV_NAME=Conda" >> $WORKSPACE_DIR/.bashrc
 
 # ----- Step framework
-# ----- Option tensorflow of framework
-FROM workspace_conda as workspace_framework_tensorflow
+# ----- Option perceval of framework
+FROM workspace_conda as workspace_framework_perceval
 
-ARG workspace_framework_tensorflow_version=2.7
-RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Tensorflow $workspace_framework_tensorflow_version\"/gm" /$WORKSPACE_DIR/.bashrc && \
-    pip install --no-input tensorflow==$workspace_framework_tensorflow_version.* && \
-    rm -rf $HOME/.cache
+USER root
+RUN apt-get -q -yy update && DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
+    libmagickwand-dev \
+    && apt-get -qq clean \
+    && rm -rf /var/lib/apt/lists/*
+
+USER ovh
+
+
+# Installs perceval
+RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval\"/gm" /$WORKSPACE_DIR/.bashrc && \
+    pip install perceval-quandela tqdm
+
+# Set up the on-start script for cloning quandela perceval examples
+COPY --chown=ovh:ovh assets/clone-perceval-examples.sh $WORKSPACE_DIR/.init_workspace/10-clone-perceval-examples.sh
+
+
+
+# be carreful with that as the customer may link his own directory
+# to this path and you don't want to override this data
+# the only purpose of the .fake is to check if the repo is up to date
+# otherwise remove it and reclone in order to have the latest notebooks
+RUN git clone https://github.com/Quandela/Perceval.git "$WORKSPACE_DIR"/Perceval && touch "$WORKSPACE_DIR"/Perceval/.fake
 
 # ----- Step commonlibs
 # ----- Option install of commonlibs
-FROM workspace_framework_tensorflow as workspace
+FROM workspace_framework_perceval as workspace
 ARG workspace_commonlibs_install_PANDAS_VERSION=1.4.2
 ARG workspace_commonlibs_install_OPENCV_VERSION=4.5.5.64
 ARG workspace_commonlibs_install_MATPLOTLIB_VERSION=3.5.2
@@ -149,7 +168,7 @@ ENTRYPOINT []
 CMD ["/usr/local/bin/aitraining_entrypoint.sh"]
 
 # ----- Step aitraining
-FROM base_editor_jupyterlab as base
+FROM base_editor_jupyterlab as base_aitraining
 
 USER ovh
 COPY --from=workspace /workspace /.workspace
@@ -162,3 +181,24 @@ RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh $editor && rm
 # This fix is included even in non tensorflow images, because
 # tensorflow may be installed later by the user, and is a really common framework on our platform.
 ENV TF_CPP_MIN_LOG_LEVEL=1
+
+# ----- Step ainotebooks
+FROM base_aitraining as base
+
+USER root
+
+COPY assets/init_workspace.sh assets/ainotebooks_entrypoint.sh  assets/wait-notebook-init.html /usr/local/bin/
+
+RUN echo "Creating /data : the only folder where the user will be able to write on the host disk rather than Ceph" && \
+    mkdir /data && chown 42420:42420 /data && \
+    echo "Installing the small waiting server" && \
+    mkdir -p /tmp/wait-notebook-init && mv /usr/local/bin/wait-notebook-init.html /tmp/wait-notebook-init/index.html && \
+    chown 42420:42420 -R /tmp/wait-notebook-init && \
+    echo "Setting files permissions" && \
+    chmod a+rx /usr/local/bin/init_workspace.sh /usr/local/bin/ainotebooks_entrypoint.sh && \
+    echo "Removing the workspace symlink, because a volume will be mounted there by AI Notebooks" && \
+    rm /workspace && mkdir -p /workspace && chown ovh:ovh /workspace
+
+USER ovh
+ENTRYPOINT []
+CMD ["/usr/local/bin/ainotebooks_entrypoint.sh"]
