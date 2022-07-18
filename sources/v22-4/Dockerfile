@@ -75,6 +75,7 @@ RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Sklearn $work
 
 # ----- Option perceval of framework
 FROM workspace_conda as workspace_framework_perceval
+ARG workspace_framework_perceval_VERSION
 
 USER root
 RUN apt-get -q -yy update && DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
@@ -86,8 +87,8 @@ USER ovh
 
 
 # Installs perceval
-RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval\"/gm" /$WORKSPACE_DIR/.bashrc && \
-    pip install perceval-quandela tqdm
+RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval $workspace_framework_perceval_VERSION\"/gm" /$WORKSPACE_DIR/.bashrc && \
+    pip install perceval-quandela==$workspace_framework_perceval_VERSION tqdm drawSvg
 
 # Set up the on-start script for cloning quandela perceval examples
 COPY --chown=ovh:ovh assets/clone-perceval-examples.sh $WORKSPACE_DIR/.init_workspace/10-clone-perceval-examples.sh

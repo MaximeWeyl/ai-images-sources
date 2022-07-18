@@ -38,6 +38,7 @@ RUN echo "Installing miniconda" && \
 # ----- Step framework
 # ----- Option perceval of framework
 FROM workspace_conda as workspace_framework_perceval
+ARG workspace_framework_perceval_VERSION=0.5.2
 
 USER root
 RUN apt-get -q -yy update && DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
@@ -49,8 +50,8 @@ USER ovh
 
 
 # Installs perceval
-RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval\"/gm" /$WORKSPACE_DIR/.bashrc && \
-    pip install perceval-quandela tqdm
+RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval $workspace_framework_perceval_VERSION\"/gm" /$WORKSPACE_DIR/.bashrc && \
+    pip install perceval-quandela==$workspace_framework_perceval_VERSION tqdm drawSvg
 
 # Set up the on-start script for cloning quandela perceval examples
 COPY --chown=ovh:ovh assets/clone-perceval-examples.sh $WORKSPACE_DIR/.init_workspace/10-clone-perceval-examples.sh
@@ -117,27 +118,58 @@ USER ovh
 WORKDIR /workspace
 
 # ----- Step editor
-# ----- Option vscode of editor
-FROM base_ovh as base_editor_vscode
+# ----- Option jupyterlab of editor
+FROM base_ovh as base_editor_jupyterlab
+ARG base_editor_jupyterlab_labVersion=3.3.4
+ARG base_editor_jupyterlab_labPipVersion=22.0.4
 
 USER root
 
-COPY assets/vscode.sh /usr/local/bin/aitraining_entrypoint.sh
+ARG base_editor_jupyterlab_NODE_VERSION="v12.20.1"
 
-# Install VSCode Server
-RUN wget --quiet https://github.com/coder/code-server/releases/download/v4.3.0/code-server_4.3.0_amd64.deb -O /tmp/code-server.deb && \
-    dpkg -i /tmp/code-server.deb && rm /tmp/code-server.deb && \
-    chmod a+rx /usr/local/bin/aitraining_entrypoint.sh
+ENV NVM_DIR="/usr/local/nvm"
+ENV PATH="$NVM_DIR/versions/node/$base_editor_jupyterlab_NODE_VERSION/bin:$PATH"
+
+COPY assets/jupyter.sh /usr/local/bin/aitraining_entrypoint.sh
+
+# Set up a python installation especially for jupyter, so it does not interfere with other python installations
+# Then installs Jupyterlab
+# Then uninstalls the kernel in the lab environment
+# We dont want the users to work there
+RUN echo "Installing miniconda just for jupyterlab" && \
+    wget -q https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh -O /tmp/miniconda.sh &&  \
+    bash /tmp/miniconda.sh -b -p /lab && rm /tmp/miniconda.sh && \
+    echo "Installing jupyterlab" && \
+    /lab/bin/pip install pip==$base_editor_jupyterlab_labPipVersion && \
+    /lab/bin/pip install jupyterlab==$base_editor_jupyterlab_labVersion ipywidgets=="7.6.5" && \
+    chmod a+rx /usr/local/bin/aitraining_entrypoint.sh && \
+    echo "Cleaning stuff to reduce the image size a bit" && \
+    rm -rf /root/.cache /root/.conda
+
+RUN echo "Installing nodjs and npm" && \
+    mkdir -p $NVM_DIR && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash && \
+    chmod -R a+rx $NVM_DIR && \
+    . "$NVM_DIR/nvm.sh" && \
+    nvm install $base_editor_jupyterlab_NODE_VERSION && \
+    echo "Installing some useful common extensions" && \
+    /lab/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager  jupyter-matplotlib && \
+    /lab/bin/jupyter labextension disable @jupyterlab/extensionmanager-extension && \
+    /lab/bin/jupyter labextension install @jupyterlab/server-proxy && \
+    echo "Uninstalling the kernel of this miniconda installation, we want the user to access only his environment" && \
+    rm -rf /lab/share/jupyter/kernels/python3/ && \
+    echo "Cleaning stuff to reduce the image size a bit" && \
+    rm -rf /tmp/*
+
+COPY --chown=ovh assets/injections_jupyterlab.sh /tmp/injections.sh
 
 USER ovh
-RUN /usr/bin/code-server --install-extension ms-python.python --force
-
 EXPOSE 8080
 ENTRYPOINT []
 CMD ["/usr/local/bin/aitraining_entrypoint.sh"]
 
 # ----- Step aitraining
-FROM base_editor_vscode as base_aitraining
+FROM base_editor_jupyterlab as base_aitraining
 
 USER ovh
 COPY --from=workspace /workspace /.workspace
