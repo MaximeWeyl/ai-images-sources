@@ -1,11 +1,11 @@
 ARG FROM
-ARG workspace_FROM=ubuntu
-ARG base_FROM=nvidia/cuda:11.0-cudnn8-runtime-ubuntu18.04
+ARG workspace_FROM="ubuntu"
+ARG base_FROM="nvidia/cuda:11.0-cudnn8-runtime-ubuntu18.04"
 
 # ----- Step workspace
 # ----- Step conda
 FROM $workspace_FROM as workspace_conda
-ARG workspace_conda_MINICONDA=https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh
+ARG workspace_conda_MINICONDA="https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh"
 ARG workspace_conda_MINICONDA_PATH=/workspace/.miniconda3
 SHELL ["/bin/bash", "-l", "-c"]
 ENV WORKSPACE_DIR=/workspace

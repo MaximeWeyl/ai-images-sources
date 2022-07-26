@@ -1,12 +1,12 @@
 ARG FROM
-ARG workspace_FROM=ubuntu
+ARG workspace_FROM="ubuntu"
 ARG workspace_commonlibs_install_WORKSPACE
-ARG base_FROM=ubuntu:18.04
+ARG base_FROM="ubuntu:18.04"
 
 # ----- Step workspace
 # ----- Step conda
 FROM $workspace_FROM as workspace_conda
-ARG workspace_conda_MINICONDA=https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh
+ARG workspace_conda_MINICONDA="https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh"
 ARG workspace_conda_MINICONDA_PATH=/workspace/.miniconda3
 SHELL ["/bin/bash", "-l", "-c"]
 ENV WORKSPACE_DIR=/workspace
@@ -38,7 +38,7 @@ RUN echo "Installing miniconda" && \
 # ----- Step framework
 # ----- Option perceval of framework
 FROM workspace_conda as workspace_framework_perceval
-ARG workspace_framework_perceval_VERSION=0.5.2
+ARG workspace_framework_perceval_VERSION="0.6.1"
 
 USER root
 RUN apt-get -q -yy update && DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
@@ -48,28 +48,22 @@ RUN apt-get -q -yy update && DEBIAN_FRONTEND=noninteractive apt-get -q -y instal
 
 USER ovh
 
-
-# Installs perceval
-RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval $workspace_framework_perceval_VERSION\"/gm" /$WORKSPACE_DIR/.bashrc && \
-    pip install perceval-quandela==$workspace_framework_perceval_VERSION tqdm drawSvg
-
 # Set up the on-start script for cloning quandela perceval examples
 COPY --chown=ovh:ovh assets/clone-perceval-examples.sh $WORKSPACE_DIR/.init_workspace/10-clone-perceval-examples.sh
 
-
-
-# be carreful with that as the customer may link his own directory
-# to this path and you don't want to override this data
-# the only purpose of the .fake is to check if the repo is up to date
-# otherwise remove it and reclone in order to have the latest notebooks
-RUN git clone https://github.com/Quandela/Perceval.git "$WORKSPACE_DIR"/Perceval && touch "$WORKSPACE_DIR"/Perceval/.fake
+# Installs perceval
+RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval $workspace_framework_perceval_VERSION\"/gm" /$WORKSPACE_DIR/.bashrc && \
+    pip install perceval-quandela==$workspace_framework_perceval_VERSION tqdm drawSvg && \
+    GIT_TERMINAL_PROMPT=0 git clone -b v$workspace_framework_perceval_VERSION --depth 1 https://github.com/Quandela/Perceval.git /tmp/perceval && \
+    mv /tmp/perceval/docs/source/notebooks "$WORKSPACE_DIR"/perceval-examples && \
+    rm -rf /tmp/perceval
 
 # ----- Step commonlibs
 # ----- Option install of commonlibs
 FROM workspace_framework_perceval as workspace
-ARG workspace_commonlibs_install_PANDAS_VERSION=1.4.2
-ARG workspace_commonlibs_install_OPENCV_VERSION=4.5.5.64
-ARG workspace_commonlibs_install_MATPLOTLIB_VERSION=3.5.2
+ARG workspace_commonlibs_install_PANDAS_VERSION="1.4.2"
+ARG workspace_commonlibs_install_OPENCV_VERSION="4.5.5.64"
+ARG workspace_commonlibs_install_MATPLOTLIB_VERSION="3.5.2"
 
 USER ovh
 RUN pip install pandas==$workspace_commonlibs_install_PANDAS_VERSION matplotlib==$workspace_commonlibs_install_MATPLOTLIB_VERSION opencv-python==$workspace_commonlibs_install_OPENCV_VERSION
@@ -120,8 +114,8 @@ WORKDIR /workspace
 # ----- Step editor
 # ----- Option jupyterlab of editor
 FROM base_ovh as base_editor_jupyterlab
-ARG base_editor_jupyterlab_labVersion=3.3.4
-ARG base_editor_jupyterlab_labPipVersion=22.0.4
+ARG base_editor_jupyterlab_labVersion="3.3.4"
+ARG base_editor_jupyterlab_labPipVersion="22.0.4"
 
 USER root
 

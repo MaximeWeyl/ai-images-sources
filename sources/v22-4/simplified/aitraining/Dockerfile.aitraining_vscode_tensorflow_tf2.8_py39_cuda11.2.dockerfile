@@ -1,12 +1,12 @@
 ARG FROM
-ARG workspace_FROM=ubuntu
+ARG workspace_FROM="ubuntu"
 ARG workspace_commonlibs_install_WORKSPACE
-ARG base_FROM=nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu18.04
+ARG base_FROM="nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu18.04"
 
 # ----- Step workspace
 # ----- Step conda
 FROM $workspace_FROM as workspace_conda
-ARG workspace_conda_MINICONDA=https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh
+ARG workspace_conda_MINICONDA="https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh"
 ARG workspace_conda_MINICONDA_PATH=/workspace/.miniconda3
 SHELL ["/bin/bash", "-l", "-c"]
 ENV WORKSPACE_DIR=/workspace
@@ -39,7 +39,7 @@ RUN echo "Installing miniconda" && \
 # ----- Option tensorflow of framework
 FROM workspace_conda as workspace_framework_tensorflow
 
-ARG workspace_framework_tensorflow_version=2.8
+ARG workspace_framework_tensorflow_version="2.8"
 RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Tensorflow $workspace_framework_tensorflow_version\"/gm" /$WORKSPACE_DIR/.bashrc && \
     pip install --no-input tensorflow==$workspace_framework_tensorflow_version.* && \
     rm -rf $HOME/.cache
@@ -47,9 +47,9 @@ RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Tensorflow $w
 # ----- Step commonlibs
 # ----- Option install of commonlibs
 FROM workspace_framework_tensorflow as workspace
-ARG workspace_commonlibs_install_PANDAS_VERSION=1.4.2
-ARG workspace_commonlibs_install_OPENCV_VERSION=4.5.5.64
-ARG workspace_commonlibs_install_MATPLOTLIB_VERSION=3.5.2
+ARG workspace_commonlibs_install_PANDAS_VERSION="1.4.2"
+ARG workspace_commonlibs_install_OPENCV_VERSION="4.5.5.64"
+ARG workspace_commonlibs_install_MATPLOTLIB_VERSION="3.5.2"
 
 USER ovh
 RUN pip install pandas==$workspace_commonlibs_install_PANDAS_VERSION matplotlib==$workspace_commonlibs_install_MATPLOTLIB_VERSION opencv-python==$workspace_commonlibs_install_OPENCV_VERSION

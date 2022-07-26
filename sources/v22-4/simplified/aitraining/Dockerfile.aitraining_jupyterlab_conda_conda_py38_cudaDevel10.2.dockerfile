@@ -1,11 +1,11 @@
 ARG FROM
-ARG workspace_FROM=ubuntu
-ARG base_FROM=nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
+ARG workspace_FROM="ubuntu"
+ARG base_FROM="nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04"
 
 # ----- Step workspace
 # ----- Step conda
 FROM $workspace_FROM as workspace_conda
-ARG workspace_conda_MINICONDA=https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh
+ARG workspace_conda_MINICONDA="https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh"
 ARG workspace_conda_MINICONDA_PATH=/workspace/.miniconda3
 SHELL ["/bin/bash", "-l", "-c"]
 ENV WORKSPACE_DIR=/workspace
@@ -90,8 +90,8 @@ WORKDIR /workspace
 # ----- Step editor
 # ----- Option jupyterlab of editor
 FROM base_ovh as base_editor_jupyterlab
-ARG base_editor_jupyterlab_labVersion=3.3.4
-ARG base_editor_jupyterlab_labPipVersion=22.0.4
+ARG base_editor_jupyterlab_labVersion="3.3.4"
+ARG base_editor_jupyterlab_labPipVersion="22.0.4"
 
 USER root
 

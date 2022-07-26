@@ -85,21 +85,15 @@ RUN apt-get -q -yy update && DEBIAN_FRONTEND=noninteractive apt-get -q -y instal
 
 USER ovh
 
-
-# Installs perceval
-RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval $workspace_framework_perceval_VERSION\"/gm" /$WORKSPACE_DIR/.bashrc && \
-    pip install perceval-quandela==$workspace_framework_perceval_VERSION tqdm drawSvg
-
 # Set up the on-start script for cloning quandela perceval examples
 COPY --chown=ovh:ovh assets/clone-perceval-examples.sh $WORKSPACE_DIR/.init_workspace/10-clone-perceval-examples.sh
 
-
-
-# be carreful with that as the customer may link his own directory
-# to this path and you don't want to override this data
-# the only purpose of the .fake is to check if the repo is up to date
-# otherwise remove it and reclone in order to have the latest notebooks
-RUN git clone https://github.com/Quandela/Perceval.git "$WORKSPACE_DIR"/Perceval && touch "$WORKSPACE_DIR"/Perceval/.fake
+# Installs perceval
+RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Quandela Perceval $workspace_framework_perceval_VERSION\"/gm" /$WORKSPACE_DIR/.bashrc && \
+    pip install perceval-quandela==$workspace_framework_perceval_VERSION tqdm drawSvg && \
+    GIT_TERMINAL_PROMPT=0 git clone -b v$workspace_framework_perceval_VERSION --depth 1 https://github.com/Quandela/Perceval.git /tmp/perceval && \
+    mv /tmp/perceval/docs/source/notebooks "$WORKSPACE_DIR"/perceval-examples && \
+    rm -rf /tmp/perceval
 
 FROM workspace_framework_$workspace_framework_key as workspace_framework
 

@@ -1,12 +1,12 @@
 ARG FROM
-ARG workspace_FROM=ubuntu
+ARG workspace_FROM="ubuntu"
 ARG workspace_commonlibs_install_WORKSPACE
-ARG base_FROM=nvidia/cuda:10.2-cudnn7-runtime-ubuntu18.04
+ARG base_FROM="nvidia/cuda:10.2-cudnn7-runtime-ubuntu18.04"
 
 # ----- Step workspace
 # ----- Step conda
 FROM $workspace_FROM as workspace_conda
-ARG workspace_conda_MINICONDA=https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh
+ARG workspace_conda_MINICONDA="https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh"
 ARG workspace_conda_MINICONDA_PATH=/workspace/.miniconda3
 SHELL ["/bin/bash", "-l", "-c"]
 ENV WORKSPACE_DIR=/workspace
@@ -39,8 +39,8 @@ RUN echo "Installing miniconda" && \
 # ----- Option pytorch of framework
 FROM workspace_conda as workspace_framework_pytorch
 
-ARG workspace_framework_pytorch_version=1.9.0
-ARG workspace_framework_pytorch_dependencies="torch==1.9.0+cu102 torchvision==0.10.0+cu102 torchaudio==0.9.0"
+ARG workspace_framework_pytorch_version="1.9.0"
+ARG workspace_framework_pytorch_dependencies=""torch==1.9.0+cu102 torchvision==0.10.0+cu102 torchaudio==0.9.0""
 
 USER ovh
 
@@ -52,9 +52,9 @@ RUN sed --in-place "s/export OVH_ENV_NAME=.*/export OVH_ENV_NAME=\"Pytorch $work
 # ----- Step commonlibs
 # ----- Option install of commonlibs
 FROM workspace_framework_pytorch as workspace
-ARG workspace_commonlibs_install_PANDAS_VERSION=1.4.2
-ARG workspace_commonlibs_install_OPENCV_VERSION=4.5.5.64
-ARG workspace_commonlibs_install_MATPLOTLIB_VERSION=3.5.2
+ARG workspace_commonlibs_install_PANDAS_VERSION="1.4.2"
+ARG workspace_commonlibs_install_OPENCV_VERSION="4.5.5.64"
+ARG workspace_commonlibs_install_MATPLOTLIB_VERSION="3.5.2"
 
 USER ovh
 RUN pip install pandas==$workspace_commonlibs_install_PANDAS_VERSION matplotlib==$workspace_commonlibs_install_MATPLOTLIB_VERSION opencv-python==$workspace_commonlibs_install_OPENCV_VERSION
@@ -105,8 +105,8 @@ WORKDIR /workspace
 # ----- Step editor
 # ----- Option jupyterlab of editor
 FROM base_ovh as base_editor_jupyterlab
-ARG base_editor_jupyterlab_labVersion=3.3.4
-ARG base_editor_jupyterlab_labPipVersion=22.0.4
+ARG base_editor_jupyterlab_labVersion="3.3.4"
+ARG base_editor_jupyterlab_labPipVersion="22.0.4"
 
 USER root
 
