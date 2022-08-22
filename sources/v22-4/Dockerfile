@@ -232,8 +232,7 @@ FROM base_editor_$base_editor_key as base_editor
 FROM base_editor as base_aitraining
 
 USER ovh
-COPY --from=workspace /workspace /.workspace
-RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh $editor && rm /tmp/injections.sh ; else echo "No injections.sh found" ; fi && \
+RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh && rm /tmp/injections.sh ; else echo "No injections.sh found" ; fi && \
     echo "source /usr/share/bash-completion/completions/git" >> $WORKSPACE_DIR/.bashrc
 
 # By default, tensorflow prints a lot of logs including INFO log that looks like warnings and
@@ -242,6 +241,12 @@ RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh $editor && rm
 # This fix is included even in non tensorflow images, because
 # tensorflow may be installed later by the user, and is a really common framework on our platform.
 ENV TF_CPP_MIN_LOG_LEVEL=1
+
+# This can be used to pass more options to your editor
+# This is placed here so this does not break docker cache system,
+# This way
+ARG base_aitraining_editorOptions=""
+ENV EDITOR_OPTIONS="$base_aitraining_editorOptions"
 
 # ----- Step ainotebooks
 FROM base_aitraining as base
