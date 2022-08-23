@@ -6,7 +6,6 @@ ARG workspace_commonlibs_key
 ARG workspace_commonlibs_install_WORKSPACE
 ARG base_FROM
 ARG base_editor_key
-ARG base_copyworkspace_WORKSPACE
 
 # ----- Step workspace
 # ----- Step conda
@@ -233,7 +232,7 @@ FROM base_editor_$base_editor_key as base_editor
 FROM base_editor as base_copyworkspace
 
 USER ovh
-COPY --from=$base_copyworkspace_WORKSPACE /workspace /.workspace
+COPY --from=workspace /workspace /.workspace
 
 # ----- Step aitraining
 FROM base_copyworkspace as base_aitraining

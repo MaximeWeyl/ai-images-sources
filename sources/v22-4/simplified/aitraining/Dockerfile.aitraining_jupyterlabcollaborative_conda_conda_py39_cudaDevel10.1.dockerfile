@@ -1,7 +1,6 @@
 ARG FROM
 ARG workspace_FROM="ubuntu"
 ARG base_FROM="nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04"
-ARG base_copyworkspace_WORKSPACE
 
 # ----- Step workspace
 # ----- Step conda
@@ -143,7 +142,7 @@ CMD ["/usr/local/bin/aitraining_entrypoint.sh"]
 FROM base_editor_jupyterlab as base_copyworkspace
 
 USER ovh
-COPY --from=$base_copyworkspace_WORKSPACE /workspace /.workspace
+COPY --from=workspace /workspace /.workspace
 
 # ----- Step aitraining
 FROM base_copyworkspace as base

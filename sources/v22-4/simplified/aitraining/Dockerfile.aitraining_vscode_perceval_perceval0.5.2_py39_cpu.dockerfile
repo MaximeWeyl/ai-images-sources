@@ -2,7 +2,6 @@ ARG FROM
 ARG workspace_FROM="ubuntu"
 ARG workspace_commonlibs_install_WORKSPACE
 ARG base_FROM="ubuntu:18.04"
-ARG base_copyworkspace_WORKSPACE
 
 # ----- Step workspace
 # ----- Step conda
@@ -136,7 +135,7 @@ CMD ["/usr/local/bin/aitraining_entrypoint.sh"]
 FROM base_editor_vscode as base_copyworkspace
 
 USER ovh
-COPY --from=$base_copyworkspace_WORKSPACE /workspace /.workspace
+COPY --from=workspace /workspace /.workspace
 
 # ----- Step aitraining
 FROM base_copyworkspace as base
