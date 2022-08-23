@@ -6,6 +6,7 @@ ARG workspace_commonlibs_key
 ARG workspace_commonlibs_install_WORKSPACE
 ARG base_FROM
 ARG base_editor_key
+ARG base_copyworkspace_WORKSPACE
 
 # ----- Step workspace
 # ----- Step conda
@@ -228,8 +229,14 @@ CMD ["/usr/local/bin/aitraining_entrypoint.sh"]
 
 FROM base_editor_$base_editor_key as base_editor
 
+# ----- Step copyworkspace
+FROM base_editor as base_copyworkspace
+
+USER ovh
+COPY --from=$base_copyworkspace_WORKSPACE /workspace /.workspace
+
 # ----- Step aitraining
-FROM base_editor as base_aitraining
+FROM base_copyworkspace as base_aitraining
 
 USER ovh
 RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh && rm /tmp/injections.sh ; else echo "No injections.sh found" ; fi && \

@@ -2,6 +2,7 @@ ARG FROM
 ARG workspace_FROM="ubuntu"
 ARG workspace_commonlibs_install_WORKSPACE
 ARG base_FROM="nvidia/cuda:11.0-cudnn8-runtime-ubuntu18.04"
+ARG base_copyworkspace_WORKSPACE
 
 # ----- Step workspace
 # ----- Step conda
@@ -148,8 +149,14 @@ EXPOSE 8080
 ENTRYPOINT []
 CMD ["/usr/local/bin/aitraining_entrypoint.sh"]
 
+# ----- Step copyworkspace
+FROM base_editor_jupyterlab as base_copyworkspace
+
+USER ovh
+COPY --from=$base_copyworkspace_WORKSPACE /workspace /.workspace
+
 # ----- Step aitraining
-FROM base_editor_jupyterlab as base_aitraining
+FROM base_copyworkspace as base_aitraining
 
 USER ovh
 RUN if [[  -f /tmp/injections.sh ]] ; then bash /tmp/injections.sh && rm /tmp/injections.sh ; else echo "No injections.sh found" ; fi && \
