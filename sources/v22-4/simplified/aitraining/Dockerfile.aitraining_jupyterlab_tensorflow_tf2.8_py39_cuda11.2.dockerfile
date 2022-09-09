@@ -1,7 +1,7 @@
 ARG FROM
 ARG workspace_FROM="ubuntu"
 ARG workspace_commonlibs_install_WORKSPACE
-ARG base_FROM="nvidia/cuda:11.2.1-cudnn8-runtime-ubuntu18.04"
+ARG base_FROM="nvidia/cuda:11.2.2-cudnn8-runtime-ubuntu18.04"
 
 # ----- Step workspace
 # ----- Step conda
