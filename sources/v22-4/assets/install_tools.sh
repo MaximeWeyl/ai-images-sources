@@ -6,6 +6,7 @@ rm  -f /etc/apt/sources.list.d/nvidia-ml.list
 rm -f  /etc/apt/sources.list.d/cuda.list
 
 apt-get -q -yy update && DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
+    build-essential \
     ca-certificates \
     curl \
     ffmpeg \
